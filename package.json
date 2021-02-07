@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "chalk": "^4.1.0",
+    "pureimage": "^0.2.5",
+    "screen-resolution": "^1.0.0",
     "yargs": "^16.2.0"
   }
 }

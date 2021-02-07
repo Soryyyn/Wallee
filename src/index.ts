@@ -1,7 +1,7 @@
 import yargs from "yargs";
 import chalk from "chalk";
 
-// import { } from "./wallpaper";
+import { createImg } from "./wallpaper";
 
 let args = yargs
   .usage(`\nIt looks like you need help with ${chalk.blueBright("Wallee")}!\nEach command also has a help page, so don't hesitate to use the \"--help\" flag alongside a command!\n\nUsage: $0 <command>`)
@@ -34,6 +34,8 @@ if (args._.length == 0) {
 
   // if new wallpaper command is given
 } else if (args._[0] == "new") {
+  createImg(false);
+
 
   // if the command is not available
 } else {
