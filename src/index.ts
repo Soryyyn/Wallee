@@ -2,6 +2,10 @@ import yargs from "yargs";
 import chalk from "chalk";
 
 import { createImg } from "./wallpaper";
+import { loadConfigFile } from "./settings";
+
+// load config at start of wallee
+loadConfigFile();
 
 let args = yargs
   .usage(`\nIt looks like you need help with ${chalk.blueBright("Wallee")}!\nEach command also has a help page, so don't hesitate to use the \"--help\" flag alongside a command!\n\nUsage: $0 <command>`)
@@ -37,7 +41,6 @@ if (args._.length == 0) {
   if (args.c != undefined && args.c.toString().length > 0) createImg(true, args.c.toString());
   else {
     if (args.c.toString().length == 0) console.log(chalk.redBright("\nColor option wasn't correctly formed. Don't forget to use \"\" around the option. (see --help)!"));
-
     createImg(false);
   }
 
