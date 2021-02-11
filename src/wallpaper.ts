@@ -5,11 +5,11 @@ import * as screenres from "screen-resolution";
 
 // generate random rgb color
 function generateRandomColor(): String {
-  let r: Number = Math.floor(Math.random() * 255 + 1);
-  let g: Number = Math.floor(Math.random() * 255 + 1);
-  let b: Number = Math.floor(Math.random() * 255 + 1);
+  let r: String = Math.floor(Math.random() * 255 + 1).toString(16).toUpperCase();
+  let g: String = Math.floor(Math.random() * 255 + 1).toString(16).toUpperCase();
+  let b: String = Math.floor(Math.random() * 255 + 1).toString(16).toUpperCase();
 
-  return `rgb(${r}, ${g}, ${b})`;
+  return `#${r.length == 1 ? "0" + r : r}${g.length == 1 ? "0" + g : g}${b.length == 1 ? "0" + b : b}`;
 }
 
 // create img from given arg color or random color

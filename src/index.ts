@@ -34,7 +34,9 @@ if (args._.length == 0) {
 
   // if new wallpaper command is given
 } else if (args._[0] == "new") {
-  createImg(false);
+
+  if (args.c != undefined) createImg(true, args.c.toString());
+  else createImg(false);
 
 
   // if the command is not available
