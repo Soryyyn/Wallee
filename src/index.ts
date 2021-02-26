@@ -2,7 +2,7 @@ import yargs from "yargs";
 import chalk from "chalk";
 
 import { createImg } from "./wallpaper";
-import { loadConfigFile } from "./settings";
+import { loadConfigFile, changeConfig } from "./settings";
 
 // load config at start of wallee
 loadConfigFile();
@@ -21,15 +21,11 @@ let args = yargs
       .wrap(null)
       .argv;
   })
-  .command("config", "Change configuration of Wallee", (yargs) => {
-    // TODO: add config checking and changing here
-  })
+  .command("config", "Change configuration of Wallee")
   .wrap(null)
   .argv
 
-console.log(args);
-
-// args validation
+// args validation & parsing
 // if there are no commands given
 if (args._.length == 0) {
   console.log(`\nWelcome to ${chalk.blueBright("Wallee")}!`);
@@ -38,11 +34,16 @@ if (args._.length == 0) {
 
   // if new wallpaper command is given
 } else if (args._[0] == "new") {
-  if (args.c != undefined && args.c.toString().length > 0) createImg(true, args.c.toString());
-  else {
-    if (args.c.toString().length == 0) console.log(chalk.redBright("\nColor option wasn't correctly formed. Don't forget to use \"\" around the option. (see --help)!"));
+  if (args.c == undefined || args.c.toString().length == 0) {
     createImg(false);
+  } else {
+    if (args.c.toString().length == 7) createImg(true, args.c.toString());
+    else console.log(chalk.redBright("\nColor option wasn't correctly formed. Don't forget to use \"\" around the option like \"#FFFFFF\". (see --help)!\n"));
   }
+
+  // if config change is wanted
+} else if (args._[0] == "config") {
+  changeConfig();
 
   // if the command is not available
 } else {

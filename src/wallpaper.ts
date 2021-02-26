@@ -4,6 +4,8 @@ import chalk from "chalk";
 import * as pimg from "pureimage";
 import * as screenres from "screen-resolution";
 
+import { getConfig } from "./settings";
+
 // generate random rgb color
 function generateRandomColor(): String {
   // generate random hex value from 00 to FF
@@ -21,11 +23,31 @@ function generateFile(img: any, ctx: any, res: { width: any, height: any }, colo
   ctx.fillRect(0, 0, res.width, res.height);
 
   // export as png
-  pimg.encodePNGToStream(img, fs.createWriteStream(path.join(process.cwd(), "walls", color + ".png"))).then(() => {
-    console.log(`\nwrote out the png file to ${chalk.greenBright(`walls/${color}.png`)}\n`);
+  pimg.encodePNGToStream(img, fs.createWriteStream(path.resolve(getConfig("wallpaperDirectory"), color + ".png"))).then(() => {
+    console.log(`\nWrote out the png file to ${chalk.greenBright(`${getConfig("wallpaperDirectory")}/${color}.png`)}\n`);
   }).catch((error: Error) => {
-    console.log(`\nthere was an ${chalk.redBright("error")} creating png file: ${error}\n`);
+    console.log(`\nThere was an ${chalk.redBright("error")} creating png file: ${error}\n`);
   });
+
+  removeOldestWallpaper(getConfig("wallpaperDirectory"), getConfig("maxWallpapers"));
+}
+
+// remove the oldest wallpaper in directory
+function removeOldestWallpaper(wallDir: string, maxFiles: Number) {
+  const files = fs.readdirSync(wallDir);
+  let current;
+  let oldest;
+  let length = 0;
+
+  files.forEach((file) => {
+    length++;
+    current = { fileName: file, birthtime: new Date(fs.statSync(path.resolve(wallDir, file)).birthtime) };
+    if (oldest == undefined || current.birthtime < oldest.birthtime) oldest = { fileName: current.fileName, birthtime: current.birthtime };
+  });
+
+  if (length > maxFiles) {
+    fs.unlinkSync(path.resolve(wallDir, oldest.fileName));
+  }
 }
 
 // create img from given arg color or random color
