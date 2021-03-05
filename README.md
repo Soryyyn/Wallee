@@ -1,15 +1,19 @@
-<p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/BYR_color_wheel.svg/1024px-BYR_color_wheel.svg.png" width="33%" margin-top="50px">
-</p>
-
-<h1 align="center"><br>Wallee 🎨 </br><p>
-
-## About
+# Wallee 🎨
 
 ## Prerequisites
 - Windows Machine (currently only running on Windows)
-- atleast **a** Monitor
-- [Node.js / NPM](https://nodejs.org/en/) or [Yarn](https://yarnpkg.com)
+- atleast **a single** Monitor
+- [Node.js / NPM](https://nodejs.org/en/) or [Yarn](https://classic.yarnpkg.com/en/docs/install/#windows-stable)
 
-## Install instructions
-1. ```npm install . -g```
+## Dev instructions
+1. Install Node.js
+2. Clone Repo
+3. cd into folder
+4. Type ```npm install``` or ```yarn``` to install all dependecies
+5. To run *Wallee* from the dev enviroment, type ```npm start <command> [arguments]``` or ```yarn run start <command> [arguments]```
+
+## Install / User instructions
+1. Install Node.js
+2. Extract ZIP and cd into folder
+3. Type ```npm install . -g``` to install *Wallee* globally and make it accessible from everywhere
+4. to start *Wallee* type ```wallee```, you're then guided what to do next
