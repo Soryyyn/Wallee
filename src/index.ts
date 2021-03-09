@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import yargs from "yargs";
 import chalk from "chalk";
 
@@ -8,10 +10,10 @@ import { loadConfigFile, changeConfig, getConfig } from "./settings";
 loadConfigFile();
 
 let args = yargs
-  .usage(`\nIt looks like you need help with ${chalk.blueBright("Wallee")}!\nEach command also has a help page, so don't hesitate to use the \"--help\" flag alongside a command!\n\nUsage: $0 <command>`)
+  .usage(`\nIt looks like you need help with ${chalk.blueBright("Wallee")}!\nEach command also has a help page, so don't hesitate to use the \"--help\" flag alongside a command!\n\nUsage: wallee <command>`)
   .command("new", "Generate new wallpaper", (yargs) => {
     yargs
-      .usage("Usage: $0 new [options]")
+      .usage("Usage: wallee new [options]")
       .option("color", {
         alias: "c",
         type: "string",
