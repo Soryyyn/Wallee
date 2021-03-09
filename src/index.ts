@@ -1,8 +1,8 @@
 import yargs from "yargs";
 import chalk from "chalk";
 
-import { createImg } from "./wallpaper";
-import { loadConfigFile, changeConfig } from "./settings";
+import { createImg, setPictureWallpaper } from "./wallpaper";
+import { loadConfigFile, changeConfig, getConfig } from "./settings";
 
 // load config at start of wallee
 loadConfigFile();
@@ -34,11 +34,17 @@ if (args._.length == 0) {
 
   // if new wallpaper command is given
 } else if (args._[0] == "new") {
-  if (args.c == undefined || args.c.toString().length == 0) {
-    createImg(false);
+
+  // if picture mode is enabled switch to it
+  if (getConfig("pictureWallpaper")) {
+    setPictureWallpaper();
   } else {
-    if (args.c.toString().length == 7) createImg(true, args.c.toString());
-    else console.log(chalk.redBright("\nColor option wasn't correctly formed. Don't forget to use \"\" around the option like \"#FFFFFF\". (see --help)!\n"));
+    if (args.c == undefined || args.c.toString().length == 0) {
+      createImg(false);
+    } else {
+      if (args.c.toString().length == 7) createImg(true, args.c.toString());
+      else console.log(chalk.redBright("\nColor option wasn't correctly formed. Don't forget to use \"\" around the option like \"#FFFFFF\". (see --help)!\n"));
+    }
   }
 
   // if config change is wanted

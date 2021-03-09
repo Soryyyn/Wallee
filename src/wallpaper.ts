@@ -3,6 +3,7 @@ import fs from "fs";
 import chalk from "chalk";
 import * as pimg from "pureimage";
 import * as screenres from "screen-resolution";
+import wallpaper from "wallpaper";
 
 import { getConfig } from "./settings";
 
@@ -28,6 +29,8 @@ function generateFile(img: any, ctx: any, res: { width: any, height: any }, colo
   }).catch((error: Error) => {
     console.log(`\nThere was an ${chalk.redBright("error")} creating png file: ${error}\n`);
   });
+
+  wallpaper.set(path.resolve(getConfig("wallpaperDirectory"), color + ".png"));
 
   removeOldestWallpaper(getConfig("wallpaperDirectory"), getConfig("maxWallpapers"));
 }
@@ -61,4 +64,15 @@ export function createImg(custom: Boolean, color?: String) {
     if (!custom) generateFile(img, ctx, res, generateRandomColor());
     else generateFile(img, ctx, res, color);
   });
+}
+
+// set a wallpaper from the picture directory given
+export function setPictureWallpaper() {
+  const files = fs.readdirSync(getConfig("pictureWallpaperDirectory"));
+
+  // only allow files with jpg or png
+  const filtered = files.filter(file => file.includes(".png") || file.includes(".jpg"));
+
+  // set wallpaper to random picture in dir
+  wallpaper.set(path.resolve(getConfig("pictureWallpaperDirectory"), filtered[Math.floor(Math.random() * filtered.length)]));
 }

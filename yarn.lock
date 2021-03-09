@@ -914,6 +914,11 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
+wallpaper@^4.4.2:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/wallpaper/-/wallpaper-4.4.2.tgz#054996ced407a7333e2dae619426455c35419779"
+  integrity sha512-u6Od6NU5UJ5zMalcV4RNKaG9DarZDdKEOMap556NhOal1vE7T7DrAJVXyLqqXDlINTTUqWbdRL/zs2VgCdRjjg==
+
 wrap-ansi@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"

@@ -18,9 +18,11 @@ export function loadConfigFile(): any {
 
     try {
       fs.writeFileSync(configPath, JSON.stringify({
-        "wallpaperDirectory": path.resolve(process.cwd(), "walls"),
+        "colorWallpaperDirectory": path.resolve(process.cwd(), "walls"),
         "startup": false,
-        "maxWallpapers": 10
+        "maxWallpapers": 10,
+        "pictureWallpaper": false,
+        "pictureWallpaperDirectory": ""
       }, null, 2));
 
       console.log(`Created default user configuration ${chalk.greenBright("successfully")}`);
@@ -64,7 +66,7 @@ export function changeConfig() {
   const questions = [
     {
       type: "input",
-      name: "wallpaperDirectory",
+      name: "colorWallpaperDirectory",
       message: "Directory where newly generated wallpapers will be stored",
       default: path.resolve(process.cwd(), "walls"),
       validate(input: any) {
@@ -93,6 +95,35 @@ export function changeConfig() {
       name: "maxWallpapers",
       message: "Max number of wallpapers beeing saved in wallpaper directory",
       default: 10
+    },
+    {
+      type: "list",
+      name: "pictureWallpaper",
+      message: "Do you want to set predefined pictures as wallpapers from a directory",
+      choices: ["yes", "no"],
+      default: "no",
+      filter(input: any) {
+        return input == "yes" ? true : false;
+      }
+    },
+    {
+      type: "input",
+      name: "pictureWallpaperDirectory",
+      message: "Directory where picture wallpapers are picked from",
+      default: "",
+      when(answers: any) {
+        return answers.pictureWallpaper == true ? true : false;
+      },
+      validate(input: any) {
+        if (fs.existsSync(input)) {
+          return true;
+        } else {
+          return "Directory not valid/available."
+        }
+      },
+      filter(input: any) {
+        return input.replace("/", "\\");
+      }
     }
   ];
 
