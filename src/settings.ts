@@ -13,6 +13,10 @@ export function loadConfigFile(): any {
   if (fs.existsSync(configPath)) {
     let raw = fs.readFileSync(configPath, "utf8");
     config = JSON.parse(raw);
+
+    // check if wallee needs to be added to startup or removed
+    if (config["startup"]) addToStartup();
+    else removeFromStartup();
   } else {
     console.log("\nUser configuration not found, creating default right now...");
 
@@ -30,10 +34,6 @@ export function loadConfigFile(): any {
       console.log(chalk.redBright(`Couldn't create user configuration file, error: `) + chalk.white(err));
     }
   }
-
-  // check if wallee needs to be added to startup or removed
-  if (getConfig("startup")) addToStartup();
-  else removeFromStartup();
 }
 
 // returns value from specified key in loaded user config

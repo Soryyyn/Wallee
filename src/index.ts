@@ -10,8 +10,9 @@ import { loadConfigFile, changeConfig, getConfig } from "./settings";
 loadConfigFile();
 
 let args = yargs
-  .usage(`\nIt looks like you need help with ${chalk.blueBright("Wallee")}!\nEach command also has a help page, so don't hesitate to use the \"--help\" flag alongside a command!\n\nUsage: wallee <command>`)
-  .command("new", "Generate new wallpaper", (yargs) => {
+  .usage(`\nIt looks like you need help with ${chalk.blueBright("Wallee")}!\nEach command also has a help page, so don't hesitate to use the \"--help\" flag alongside a command!\n\nUsage: $0 <command>`)
+  .scriptName("wallee")
+  .command(["new"], "Generate new wallpaper", (yargs) => {
     yargs
       .usage("Usage: wallee new [options]")
       .option("color", {
@@ -23,7 +24,7 @@ let args = yargs
       .wrap(null)
       .argv;
   })
-  .command("config", "Change configuration of Wallee")
+  .command(["config", "settings"], "Change configuration of Wallee")
   .wrap(null)
   .argv
 
