@@ -23,16 +23,19 @@ function generateFile(img: any, ctx: any, res: { width: any, height: any }, colo
   ctx.fillStyle = color;
   ctx.fillRect(0, 0, res.width, res.height);
 
-  // export as png
-  pimg.encodePNGToStream(img, fs.createWriteStream(path.resolve(getConfig("wallpaperDirectory"), color + ".png"))).then(() => {
-    console.log(`\nWrote out the png file to ${chalk.greenBright(`${getConfig("wallpaperDirectory")}/${color}.png`)}\n`);
-  }).catch((error: Error) => {
-    console.log(`\nThere was an ${chalk.redBright("error")} creating png file: ${error}\n`);
-  });
-
-  wallpaper.set(path.resolve(getConfig("wallpaperDirectory"), color + ".png"));
-
-  removeOldestWallpaper(getConfig("wallpaperDirectory"), getConfig("maxWallpapers"));
+  // export as png, set wallpaper, and remove oldest if necessary
+  pimg.encodePNGToStream(img, fs.createWriteStream(path.resolve(getConfig("colorWallpaperDirectory"), color + ".png"))).then(() => {
+    console.log(`\nWrote out the png file to ${chalk.greenBright(`${getConfig("colorWallpaperDirectory")}/${color}.png`)}\n`);
+  })
+    .then(() => {
+      wallpaper.set(path.resolve(getConfig("colorWallpaperDirectory"), color + ".png"));
+    })
+    .then(() => {
+      removeOldestWallpaper(getConfig("colorWallpaperDirectory"), getConfig("maxWallpapers"));
+    })
+    .catch((error: Error) => {
+      console.log(`\nThere was an ${chalk.redBright("error")} creating png file: ${error}\n`);
+    });
 }
 
 // remove the oldest wallpaper in directory
